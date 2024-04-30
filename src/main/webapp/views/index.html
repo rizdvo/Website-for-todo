@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Todo list</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/styles/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/styles/aos.css" type="text/css">
+    <link rel="stylesheet" href="/styles/index.css" type="text/css">
+</head>
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<section class="schedule section" id="schedule">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-12 text-center">
+                <h6 data-aos="fade-up">You're better -</h6>
+                <h2 class="text-white" data-aos="fade-up" data-aos-delay="200">Todo list</h2>
+            </div>
+            <div class="col-lg-12 py-5 col-md-12 col-12">
+                <table class="table table-bordered table-responsive schedule-table" data-aos="fade-up"
+                       data-aos-delay="300">
+                    <thead class="thead-light">
+                    <th><i class="fa fa-sort-numeric-asc"></i></th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    </thead>
+
+                    <tbody>
+                    <tr style="color: aliceblue;" th:each="task: ${tasks}">
+                        <td th:text="${task.id}"></td>
+                        <td th:text="${task.description}"></td>
+                        <td th:text="${task.status}"></td>
+                        <td>
+                            <button th:id="'edit_' + ${task.id}"
+                                    th:onclick="'edit_task(' + ${task.id} + ')'" class="btn btn-secondary">Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button th:id="'delete_' + ${task.id}"
+                                    th:onclick="'delete_task(' + ${task.id} + ')'" class="btn btn-danger">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text_bold">ADD NEW TASK:</td>
+                    </tr>
+                    <tr>
+                        <td> </td>
+                        <td>
+                            <input id="description_new" type="text" value="">
+                        </td>
+                        <td>
+                            <label for="status_new"></label>
+                            <select id="status_new">
+                                <option value='IN_PROGRESS'>IN PROGRESS</option>
+                                <option value='DONE'>DONE</option>
+                                <option value='PAUSED'>PAUSED</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-success" id="save_new" onclick="add_task()">Save</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <h2 data-aos="fade-up" data-aos-delay="300">
+                        <button th:each="pageNumber : ${page_numbers}" class="btn btn-lg">
+                            <a th:href="@{/(page=${pageNumber}, limit=3)}" th:text="${pageNumber}"
+                               th:classappend="${pageNumber == current_page ? 'active_page' : ''}"></a>
+                        </button>
+                    </h2>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/bootstrap.min.js"></script>
+<script src="/scripts/aos.js"></script>
+<script src="/scripts/smoothscroll.js"></script>
+<script src="/scripts/custom.js"></script>
+<script src="/scripts/request.js"></script>
+</body>
+</html>
